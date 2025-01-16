@@ -35,6 +35,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           DISABLE_ERRORS: true
           VALIDATE_JAVA: true
+          VALIDATE_XML: true
           VALIDATE_GOOGLE_JAVA_FORMAT: true
           LOG_LEVEL: DEBUG
           #FIX_GOOGLE_JAVA_FORMAT: true
