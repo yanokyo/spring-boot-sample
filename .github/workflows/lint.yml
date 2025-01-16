@@ -38,8 +38,3 @@ jobs:
           VALIDATE_GOOGLE_JAVA_FORMAT: true
           LOG_LEVEL: DEBUG
           #FIX_GOOGLE_JAVA_FORMAT: true
-      - name: Upload GOOGLE_JAVA_FORMAT Stdout
-        uses: actions/upload-artifact@v4
-        with:
-          name: super-linter-parallel-stdout-GOOGLE_JAVA_FORMAT
-          path: /tmp/super-linter-output/super-linter-parallel-stdout-GOOGLE_JAVA_FORMAT
