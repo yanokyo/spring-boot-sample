@@ -34,6 +34,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: true
           DISABLE_ERRORS: true
-          VALIDATE_YAML: false
-          VALIDATE_YAML_PRETTIER: false
-          VALIDATE_SHELL_SHFMT: false
+          VALIDATE_JAVA: true
+          VALIDATE_GOOGLE_JAVA_FORMAT: true
