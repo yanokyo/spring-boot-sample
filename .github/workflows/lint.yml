@@ -37,6 +37,7 @@ jobs:
           VALIDATE_JAVA: true
           VALIDATE_GOOGLE_JAVA_FORMAT: true
           LOG_LEVEL: DEBUG
+          FIX_GOOGLE_JAVA_FORMAT: true
           #SAVE_SUPER_LINTER_SUMMARY: true
           #ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
       #- name: Upload Sumary report
