@@ -6,7 +6,7 @@ on: # yamllint disable-line rule:truthy
      - develop
   workflow_dispatch:
 
-#permissions: {}
+permissions: {}
 
 jobs:
   build:
@@ -32,10 +32,10 @@ jobs:
         env:
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_ALL_CODEBASE: true # 新規・変更分のみを対象とする場合はfalseに変更
           DISABLE_ERRORS: true
           VALIDATE_JAVA: true
           VALIDATE_XML: true
           VALIDATE_GOOGLE_JAVA_FORMAT: true
-          LOG_LEVEL: DEBUG
+          LOG_LEVEL: INFO # 詳細を確認する場合はDEBUGへ変更
           #FIX_GOOGLE_JAVA_FORMAT: true
