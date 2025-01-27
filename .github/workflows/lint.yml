@@ -37,6 +37,7 @@ jobs:
           VALIDATE_JAVA: true
           VALIDATE_XML: true
           VALIDATE_GOOGLE_JAVA_FORMAT: true
+          JAVA_FILE_NAME: google_checks.xml
           LOG_LEVEL: INFO # 詳細を確認する場合はDEBUGへ変更
           #FIX_GOOGLE_JAVA_FORMAT: true
           SAVE_SUPER_LINTER_OUTPUT: true
