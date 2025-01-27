@@ -60,5 +60,5 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: >
-          cat ./super-linter-output/super-linter-worker-results-JAVA.json 
+          cat ./super-linter-output/super-linter/super-linter-worker-results-JAVA.json 
           | reviewdog -f checkstyle -reporter=github-pr-check -name run-reviewdog -tee
