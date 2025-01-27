@@ -42,8 +42,9 @@ jobs:
           SAVE_SUPER_LINTER_OUTPUT: true
       - name: lint with SQLFluff
         run: |
-          apt install -y install tree
+          sudo apt install -y install tree
           tree
+          find .
       - name: Upload War File
         uses: actions/upload-artifact@v4
         with:
