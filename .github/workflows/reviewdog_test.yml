@@ -1,0 +1,64 @@
+name: reviewdog test
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches:
+     - develop
+  workflow_dispatch:
+  pull_request:
+
+permissions: {}
+
+jobs:
+  build:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0
+
+      - name: Super-linter
+        uses: super-linter/super-linter/slim@v7.2.1 # x-release-please-version
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true # 新規・変更分のみを対象とする場合はfalseに変更
+          DISABLE_ERRORS: true
+          VALIDATE_JAVA: true
+          VALIDATE_XML: true
+          VALIDATE_GOOGLE_JAVA_FORMAT: true
+          JAVA_FILE_NAME: google_checks.xml
+          LOG_LEVEL: INFO # 詳細を確認する場合はDEBUGへ変更
+          #FIX_GOOGLE_JAVA_FORMAT: true
+          SAVE_SUPER_LINTER_OUTPUT: true
+      - name: lint with SQLFluff
+        run: |
+          #sudo apt install -y install tree
+          tree
+          find .
+      - name: Upload War File
+        uses: actions/upload-artifact@v4
+        with:
+          name: SUPER_LINTER_OUTPUT
+          path: super-linter-output/super-linter
+      - name: Set up reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: v0.17.2
+      - name: Run reviewdog
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >
+          cat ./super-linter-output/super-linter-worker-results-JAVA.json 
+          | reviewdog -f checkstyle -reporter=github-pr-check -name run-reviewdog -tee
