@@ -42,7 +42,7 @@ jobs:
           SAVE_SUPER_LINTER_OUTPUT: true
       - name: lint with SQLFluff
         run: |
-          sudo apt install -y install tree
+          #sudo apt install -y install tree
           tree
           find .
       - name: Upload War File
