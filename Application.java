@@ -14,7 +14,7 @@ public class Application {
 
     private void DoReallyNothing() {
         try {
-            var counter = 1004;
+            var counter = 1005;
 
         } catch (Exception e) {
 
