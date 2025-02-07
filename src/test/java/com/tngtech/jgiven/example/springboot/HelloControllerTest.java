@@ -1,7 +1,7 @@
 package com.tngtech.jgiven.example.springboot;
 
 import com.tngtech.jgiven.integration.spring.SimpleSpringRuleScenarioTest;
-import org.junit.Test;
+    import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockServletContext;
@@ -25,7 +25,7 @@ public class HelloControllerTest extends SimpleSpringRuleScenarioTest<HelloStage
     @Test
     @As( "The path '/foo' returns NOT FOUND" )
     public void the_path_foo_returns_not_found() throws Exception {
-        when().get( "/foo" );
+          when().get( "/foo" );
         then().the_status_is( HttpStatus.NOT_FOUND );
     }
 
