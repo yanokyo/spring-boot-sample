@@ -36,8 +36,10 @@ jobs:
 
       - name: Run google-java-format Check & reviewdog
         run: |
-          git fetch origin main
-          git diff -U0 --no-color origin/main...HEAD | python3 google-java-format-diff.py --google-java-format-jar ./google-java-format-1.15.0-all-deps.jar -p1 > format-diff.patch
+          #git fetch origin main
+          git diff -U0 --no-color origin/main...HEAD > diff.patch
+          cat diff.patch
+          cat diff.patch | python3 google-java-format-diff.py --google-java-format-jar ./google-java-format-1.15.0-all-deps.jar -p1 > format-diff.patch
           cat format-diff.patch
           cat format-diff.patch | reviewdog -f diff -name="google-java-format" -reporter=github-pr-review -level=warning
         env:
