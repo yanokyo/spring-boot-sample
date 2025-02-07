@@ -1,4 +1,4 @@
-name: java-formatter-check
+name: Java Formatter Check on Reviewdog
 
 on: [pull_request]
 
