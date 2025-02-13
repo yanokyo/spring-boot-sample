@@ -1,0 +1,75 @@
+name: Java Formatter Check on Reviewdog & comment
+
+on:
+  issue_comment:
+    types:
+      - created
+
+permissions:
+ contents: read
+ pull-requests: write 
+
+jobs:
+  java-format-check:
+    # add comment of pull request && comment is KEYWORD
+    if: (github.event.issue.pull_request != null) && github.event.comment.body == '!run formatter'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Target Branch
+        uses: actions/github-script@v2
+        id: set-target-branch
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          result-encoding: string
+          script: |
+            const pull_request = await github.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            })
+            return pull_request.data.head.ref
+    
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.set-target-branch.outputs.result }}
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Set up reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: v0.17.2
+
+      - name: Install google-java-format
+        run: |
+          curl -LJO https://github.com/google/google-java-format/releases/download/v1.15.0/google-java-format-1.15.0-all-deps.jar
+          curl -LJO https://raw.githubusercontent.com/google/google-java-format/master/scripts/google-java-format-diff.py
+
+      - name: Git Check
+        run: |
+          git --version
+          git status
+
+      - name: Git fetch
+        run: git fetch origin main
+
+      - name: Run google-java-format Check & reviewdog
+        run: |
+          git diff -U0 --no-color origin/main...HEAD > diff.patch
+          cat diff.patch
+          cat diff.patch | python3 google-java-format-diff.py --google-java-format-jar ./google-java-format-1.15.0-all-deps.jar -p1 > format-diff.patch
+          cat format-diff.patch
+          cat format-diff.patch | reviewdog -f diff -name="google-java-format" -reporter=github-pr-review -level=warning
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
