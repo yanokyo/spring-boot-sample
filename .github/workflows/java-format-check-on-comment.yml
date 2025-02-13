@@ -71,16 +71,8 @@ jobs:
           cat diff.patch | python3 google-java-format-diff.py --google-java-format-jar ./google-java-format-1.15.0-all-deps.jar -p1 > format-diff.patch
           cat format-diff.patch
           #cat format-diff.patch | reviewdog -f diff -name="google-java-format" -reporter=github-pr-review -level=warning
-
-      - name: Execute Reviewdog
-        uses: reviewdog/action-reviewdog@v1
-        with:
-          name: google-java-formatt
-          reporter: diff
-          filter-mode: added
-          fail-on-error: false
-          level: warrning
-          diff: < format-diff.patch
+          cat format-diff.patch | reviewdog -f diff -name="google-java-format" -reporter=github-pr-check -level=warning
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
         
