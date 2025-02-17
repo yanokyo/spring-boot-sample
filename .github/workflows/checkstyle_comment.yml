@@ -1,0 +1,45 @@
+name: CheckStyle for Java on Reviewdog
+
+on:
+  issue_comment:
+    types:
+      - created
+
+permissions:
+ contents: read
+ pull-requests: write
+
+jobs:
+  java-checkstyle-check:
+    # add comment of pull request && comment is KEYWORD
+    if: (github.event.issue.pull_request != null) && github.event.comment.body == '!run checkstyle'  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Target Branch
+        uses: actions/github-script@v2
+        id: set-target-branch
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          result-encoding: string
+          script: |
+            const pull_request = await github.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            })
+            return pull_request.data.head.ref
+    
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.set-target-branch.outputs.result }}
+
+      - name: Execuste Checkstyle for Java
+        uses: dbelyaev/action-checkstyle@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-check
+          filter_mode: added
+          fail_level: none
+          level: warning
