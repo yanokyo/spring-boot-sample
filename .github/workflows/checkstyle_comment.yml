@@ -49,10 +49,20 @@ jobs:
           SAVE_SUPER_LINTER_OUTPUT: true
           ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
 
-      - name: Check Lint
+      - name: Check Warrning|Error in Result
+        id: check_log
+        run: |
+          if grep -E "[WARN]||[ERROR]" super-linter-output/super-linter/super-linter-worker-results-JAVA.json; then
+            echo "Result=false" >> "$GITHUB_ENV"
+          else
+            echo "Result=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Check & Exit
         #if: contains(steps.lint.outputs, '[WARN]')
+        if: env.Result == 'false'
         run: |
           echo 'Lint Result Warrning'
-          ls -la super-linter-output/super-linter
-          cat super-linter-output/super-linter/super-linter-worker-results-JAVA.json
+          #ls -la super-linter-output/super-linter
+          #cat super-linter-output/super-linter/super-linter-worker-results-JAVA.json
           exit 1
