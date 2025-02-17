@@ -50,7 +50,8 @@ jobs:
           ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
 
       - name: Check Lint
-        if: contains(steps.lint.outputs, '[WARN]')
+        #if: contains(steps.lint.outputs, '[WARN]')
         run: |
           echo 'Lint Result Warrning'
+          echo steps.lint.outputs
           exit 1
