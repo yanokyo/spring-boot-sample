@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HelloService {
-    public String greeting() {
-        return "Greetings from JGiven!";
-    }
+  public String greeting() {
+    return "Greetings from JGiven!";
+  }
 }
