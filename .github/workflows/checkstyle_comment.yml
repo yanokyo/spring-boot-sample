@@ -52,7 +52,8 @@ jobs:
       - name: Check Warrning|Error in Result
         id: check_log
         run: |
-          if grep -E "\[WARN\]||\[ERROR\]" super-linter-output/super-linter/super-linter-worker-results-JAVA.json; then
+          #if grep -E "\[WARN\]||\[ERROR\]" super-linter-output/super-linter/super-linter-worker-results-JAVA.json; then
+          if grep -E "\[WARN\]||\[ERROR\]" super-linter-output/super-linter/super-linter-results.json; then
             echo "LintResult=false" >> "$GITHUB_ENV"
           else
             echo "LintResult=true" >> "$GITHUB_ENV"
@@ -65,3 +66,9 @@ jobs:
           #ls -la super-linter-output/super-linter
           #cat super-linter-output/super-linter/super-linter-worker-results-JAVA.json
           exit 1
+
+      - name: Upload War File
+        uses: actions/upload-artifact@v4
+        with:
+          name: SUPER_LINTER_OUTPUT
+          path: super-linter-output/super-linter
