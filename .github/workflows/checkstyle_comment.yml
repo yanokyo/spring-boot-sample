@@ -52,15 +52,14 @@ jobs:
       - name: Check Warrning|Error in Result
         id: check_log
         run: |
-          if grep -E "[WARN]||[ERROR]" super-linter-output/super-linter/super-linter-worker-results-JAVA.json; then
-            echo "Result=false" >> "$GITHUB_ENV"
+          if grep -E "\[WARN\]||\[ERROR\]" super-linter-output/super-linter/super-linter-worker-results-JAVA.json; then
+            echo "LintResult=false" >> "$GITHUB_ENV"
           else
-            echo "Result=true" >> "$GITHUB_ENV"
+            echo "LintResult=true" >> "$GITHUB_ENV"
           fi
 
       - name: Check & Exit
-        #if: contains(steps.lint.outputs, '[WARN]')
-        if: env.Result == 'false'
+        if: env.LintResult == 'false'
         run: |
           echo 'Lint Result Warrning'
           #ls -la super-linter-output/super-linter
