@@ -45,7 +45,7 @@ jobs:
           VALIDATE_JAVA: true
           VALIDATE_XML: true
           JAVA_FILE_NAME: google_checks.xml
-          LOG_LEVEL: WARN # 詳細を確認する場合はDEBUGへ変更
+          LOG_LEVEL: INFO # 詳細を確認する場合はDEBUGへ変更
           SAVE_SUPER_LINTER_OUTPUT: true
 
       - name: Check Lint
