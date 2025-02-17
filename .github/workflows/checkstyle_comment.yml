@@ -35,11 +35,15 @@ jobs:
           fetch-depth: 0
           ref: ${{ steps.set-target-branch.outputs.result }}
 
-      - name: Execuste Checkstyle for Java
-        uses: dbelyaev/action-checkstyle@master
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
-          filter_mode: added
-          fail_level: none
-          level: warning
+      - name: Super-linter
+        uses: super-linter/super-linter/slim@v7.2.1 # x-release-please-version
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true # 新規・変更分のみを対象とする場合はfalseに変更
+          DISABLE_ERRORS: true
+          VALIDATE_JAVA: true
+          VALIDATE_XML: true
+          JAVA_FILE_NAME: google_checks.xml
+          LOG_LEVEL: INFO # 詳細を確認する場合はDEBUGへ変更
+          SAVE_SUPER_LINTER_OUTPUT: true
