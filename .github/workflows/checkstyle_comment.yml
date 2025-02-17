@@ -36,6 +36,7 @@ jobs:
           ref: ${{ steps.set-target-branch.outputs.result }}
 
       - name: Super-linter
+        id: lint
         uses: super-linter/super-linter/slim@v7.2.1 # x-release-please-version
         env:
           # To report GitHub Actions status checks
@@ -47,7 +48,8 @@ jobs:
           LOG_LEVEL: WARN # 詳細を確認する場合はDEBUGへ変更
           SAVE_SUPER_LINTER_OUTPUT: true
 
-      - name: Post CheckStyle result as PR Comment
+      - name: Check Lint
+        if: contains(steps.lint.outputs.result, '[WARN]')
         run: |
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo 'Lint Result Warrning'
+          exit 1
