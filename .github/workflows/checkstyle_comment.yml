@@ -47,9 +47,10 @@ jobs:
           JAVA_FILE_NAME: google_checks.xml
           LOG_LEVEL: INFO # 詳細を確認する場合はDEBUGへ変更
           SAVE_SUPER_LINTER_OUTPUT: true
+          ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
 
       - name: Check Lint
-        if: contains(steps.lint.outputs.result, '[WARN]')
+        if: contains(steps.lint.outputs, '[WARN]')
         run: |
           echo 'Lint Result Warrning'
           exit 1
