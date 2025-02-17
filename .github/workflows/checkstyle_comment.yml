@@ -41,9 +41,13 @@ jobs:
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: true # 新規・変更分のみを対象とする場合はfalseに変更
-          DISABLE_ERRORS: true
           VALIDATE_JAVA: true
           VALIDATE_XML: true
           JAVA_FILE_NAME: google_checks.xml
           LOG_LEVEL: INFO # 詳細を確認する場合はDEBUGへ変更
           SAVE_SUPER_LINTER_OUTPUT: true
+
+      - name: Post CheckStyle result as PR Comment
+        run: |
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
