@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SUPER_LINTER_OUTPUT
-          path: super-linter-output/super-linter
+          path: super-linter-output/super-linter/super-linter-worker-results-JAVA.json
 
       - name: Check & Exit
         if: env.LintResult == 'false'
