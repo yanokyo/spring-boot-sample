@@ -37,6 +37,7 @@ ext {
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
     implementation 'com.h2database:h2:2.3.232'
     implementation 'com.tngtech.jgiven:jgiven-spring:1.0.0'
