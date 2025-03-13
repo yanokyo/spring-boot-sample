@@ -39,6 +39,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
     implementation 'com.h2database:h2:2.3.232'
+　　implementation 'com.tngtech.jgiven:jgiven-spring:1.0.0'
     testImplementation "org.assertj:assertj-core:$assertjVersion"
     testImplementation "org.hsqldb:hsqldb:$hsqldbVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
